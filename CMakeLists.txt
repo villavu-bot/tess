@@ -10,7 +10,7 @@ IF(WIN32)
         -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
     )
 ELSEIF(APPLE)
-    target_include_directories(${PROJECT_NAME} /usr/local/include/)
+    target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
     target_link_libraries(${PROJECT_NAME}
       "-framework accelerate"
       )
