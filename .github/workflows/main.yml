@@ -36,10 +36,10 @@ jobs:
           cmake:p
           ninja:p
     
+    - name: Install gcc
     - run: |
            pacman --noconfirm -S ${{ matrix.mingw_package_prefix }}-gcc
-
-    - run: gcc --version
+           pacman --noconfirm -S ${{ matrix.mingw_package_prefix }}-gcc-libs
 
     - name: Install lept
       run: |
@@ -57,9 +57,11 @@ jobs:
            git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
            cd tesseract
            sed -e "s/tesseract_LDADD += -ltiff//g" -i makefile.am
+           mkdir -p m4
            ./autogen.sh
            ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -static -static-libgcc -static-libstdc++'
-           make & make install
+           make 
+           make install
 
     - name: Build plugin
       run: |
