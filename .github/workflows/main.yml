@@ -8,15 +8,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - msystem: MINGW32
-          #   mingw_package_prefix: mingw-w64-i686      
-          #   libs: /mingw32/lib/
-          #   libtesseract: libtesseract32.dll
+           - msystem: MINGW32
+             mingw_package_prefix: mingw-w64-i686      
+             binary: libtesseract32.dll
 
           - msystem: MINGW64
             mingw_package_prefix: mingw-w64-x86_64
-            libs: /mingw64/lib/
-            libtesseract: libtesseract64.dll
+            binary: libtesseract64.dll
     defaults:
       run:
         shell: msys2 {0}
@@ -68,9 +66,8 @@ jobs:
            mkdir -p build
            cmake -S . -B build -G Ninja
            cmake --build build --config Release
-           ls -d build
            
     - uses: actions/upload-artifact@v3
       with:
-          path: build/libtesseract64.dll
+          path: build/${{ matrix.binary }}
           retention-days: 5
