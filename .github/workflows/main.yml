@@ -1,5 +1,5 @@
 name: windows
-on: push
+on: fork
 
 jobs:
   windows:
