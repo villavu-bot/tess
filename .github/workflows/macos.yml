@@ -12,7 +12,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-           brew install autoconf automake ninja glibtool glibtoolize    
+           brew install autoconf automake ninja libtool    
     
     - name: Install lept
       run: |
