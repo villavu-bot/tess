@@ -68,10 +68,9 @@ jobs:
            mkdir -p build
            cmake -S . -B build -G Ninja
            cmake --build build --config Release
-           ls -R build
-
+           ls -d build
+           
     - uses: actions/upload-artifact@v3
       with:
-          name: ${{ env.libtesseract }}
-          path: build/${{ env.libtesseract }}
+          path: build/libtesseract64.dll
           retention-days: 5
