@@ -37,7 +37,7 @@ jobs:
           ninja:p
     
     - name: Install gcc
-    - run: |
+      run: |
            pacman --noconfirm -S ${{ matrix.mingw_package_prefix }}-gcc
            pacman --noconfirm -S ${{ matrix.mingw_package_prefix }}-gcc-libs
 
