@@ -12,7 +12,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-           brew install autoconf automake ninja    
+           brew install autoconf automake ninja glibtool glibtoolize    
     
     - name: Install lept
       run: |
@@ -20,7 +20,7 @@ jobs:
            git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
            cd leptonica
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CFLAGS=-g0 -O3 -static -mmacosx-version-min=10.13'
+           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CPPFLAGS=-g0 -O3 -mmacosx-version-min=10.13'
            make
            make install
 
