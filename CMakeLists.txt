@@ -10,7 +10,7 @@ IF(WIN32)
         -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
     )
 ELSEIF(APPLE)
-    target_link_libraries(${PROJECT_NAME} -static -force_load ${TESS_LIBS} pthread)
+    target_link_libraries(${PROJECT_NAME} -static -force_load libtesseract.a libleptonica.a)
 ELSE()
     target_link_libraries(${PROJECT_NAME} 
         -static-libgcc -static-libstdc++ 
