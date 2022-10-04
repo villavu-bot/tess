@@ -20,7 +20,7 @@ jobs:
            git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
            cd leptonica
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=g++-11' 'CPPFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++ -mmacosx-version-min=10.13'
+           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=g++-11' 'CPPFLAGS=-g0 -O3 -mmacosx-version-min=10.13'
            make
            make install
 
@@ -31,7 +31,7 @@ jobs:
            cd tesseract
            mkdir -p m4
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-11' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -static -static-libgcc -static-libstdc++'
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-11' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3'
 
     - name: Make and Install Tesseract
       run: |
