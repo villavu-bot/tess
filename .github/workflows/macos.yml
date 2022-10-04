@@ -41,7 +41,6 @@ jobs:
 
     - name: Build plugin
       run: |
-           export LIBRARY_PATH=/usr/local/lib
            export C_INCLUDE_PATH=/usr/local/include
            export CPLUS_INCLUDE_PATH=/usr/local/include
            mkdir -p build
