@@ -31,7 +31,7 @@ jobs:
            cd tesseract
            mkdir -p m4
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -mmacosx-version-min=10.13'
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -mmacosx-version-min=10.13 -framework accelerate'
 
     - name: Make and Install Tesseract
       run: |
