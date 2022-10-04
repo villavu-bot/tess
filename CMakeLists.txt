@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.2)
-project(Tesseract DESCRIPTION "libtesseract")
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version" FORCE)
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
+project(Tesseract DESCRIPTION "libtesseract")
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
@@ -10,8 +14,6 @@ IF(WIN32)
         -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
     )
 ELSEIF(APPLE)
-    set(CMAKE_C_COMPILER "gcc")
-    set(CMAKE_CXX_COMPILER "g++")
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
     target_link_libraries(${PROJECT_NAME}
       "-framework accelerate"
