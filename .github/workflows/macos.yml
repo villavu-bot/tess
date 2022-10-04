@@ -1,0 +1,44 @@
+name: macos
+on: push
+
+jobs:
+  macos:
+    runs-on: macos-12
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install dependencies
+      run: |
+           brew install autoconf automake    
+    
+    - name: Install lept
+      run: |
+           echo "Building leptonica..."
+           git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
+           cd leptonica
+           ./autogen.sh
+           ./configure '--with-pic' '--disable-shared' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CXXFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++'
+           make
+           make install
+
+    - name: Install Tesseract
+      run: |
+           echo "Building Tesseract..."
+           git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
+           cd tesseract
+           mkdir -p m4
+           ./autogen.sh
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -static -static-libgcc -static-libstdc++'
+           make 
+           make install
+
+    - name: Build plugin
+      run: |
+           mkdir -p build
+           cmake -S . -B build -G Ninja
+           cmake --build build --config Release
+           
+    - uses: actions/upload-artifact@v3
+      with:
+          path: build/${{ matrix.binary }}
+          retention-days: 5
