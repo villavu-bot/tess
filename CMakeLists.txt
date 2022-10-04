@@ -11,7 +11,7 @@ IF(WIN32)
 ELSEIF(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version" FORCE)
     set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/local/lib)
-    target_link_libraries(${PROJECT_NAME} libtesseract.a libleptonica.a)
+    target_link_libraries(${PROJECT_NAME} tesseract leptonica)
 ELSE()
     target_link_libraries(${PROJECT_NAME} 
         -static-libgcc -static-libstdc++ 
