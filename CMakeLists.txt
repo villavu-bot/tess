@@ -10,7 +10,7 @@ IF(WIN32)
         -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
     )
 ELSEIF(APPLE)
-    target_link_libraries(${PROJECT_NAME} /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
+    target_link_libraries(${PROJECT_NAME} -static -framework Accelerate /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
 ELSE()
     target_link_libraries(${PROJECT_NAME} 
         -static-libgcc -static-libstdc++ 
