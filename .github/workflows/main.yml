@@ -12,9 +12,9 @@ jobs:
              mingw_package_prefix: mingw-w64-i686      
              binary: libtesseract32.dll
 
-          - msystem: MINGW64
-            mingw_package_prefix: mingw-w64-x86_64
-            binary: libtesseract64.dll
+           - msystem: MINGW64
+             mingw_package_prefix: mingw-w64-x86_64
+             binary: libtesseract64.dll
     defaults:
       run:
         shell: msys2 {0}
