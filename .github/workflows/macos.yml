@@ -17,7 +17,7 @@ jobs:
            git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
            cd leptonica
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CXXFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++'
+           ./configure '--with-pic' '--disable-shared' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CXXFLAGS=-g0 -O3'
            make
            make install
 
@@ -28,9 +28,13 @@ jobs:
            cd tesseract
            mkdir -p m4
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -static -static-libgcc -static-libstdc++'
-           make 
-           make install
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math'
+
+    - name: Make and Install Tesseract
+      run: |
+           cd tesseract
+           make -j 8
+           sudo make install install
 
     - name: Build plugin
       run: |
