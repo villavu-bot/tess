@@ -49,7 +49,7 @@ jobs:
         ./autogen.sh
         ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=${{ matrix.config.cxx }}' 'CFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++'
         make
-        sudo make install
+        make install
 
     - name: Build Tesseract
       run: |
@@ -60,7 +60,7 @@ jobs:
         ./autogen.sh
         ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -static -static-libgcc -static-libstdc++'
         make
-        sudo make install install
+        make install install
 
     - name: Build Library
       run: |
