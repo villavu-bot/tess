@@ -30,7 +30,7 @@ jobs:
            git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
            cd tesseract
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-10' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3'
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-10' 'CPPFLAGS=-DTESS_EXPORTS -g0 -O3'
            make
            sudo make install install
 
