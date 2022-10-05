@@ -70,13 +70,13 @@ jobs:
            
     - name: Print Library Dependencies  
       run: |
-        ldd build/${{ env.binary }}        
+        ldd build/${{ matrix.binary }}        
            
     - name: Print Library Exports  
       run: |
-        dumpbin /EXPORTS build/${{ env.binary }}             
+        dumpbin /EXPORTS build/${{ matrix.binary }}             
            
     - uses: actions/upload-artifact@v3
       with:
-          path: build/${{ env.binary }}
+          path: build/${{ matrix.binary }}
           retention-days: 5
