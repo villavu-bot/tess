@@ -43,7 +43,7 @@ jobs:
     - name: Build plugin
       run: |
            mkdir -p build
-           cmake -S . -B build -G Ninja
+           cmake -S . -B build
            cmake --build build --config Release
            
     - uses: actions/upload-artifact@v3
