@@ -74,7 +74,7 @@ jobs:
            
     - name: Print Library Exports  
       run: |
-        objdump -p ${{ matrix.binary }}             
+        objdump -p build/${{ matrix.binary }}             
            
     - uses: actions/upload-artifact@v3
       with:
