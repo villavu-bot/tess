@@ -21,7 +21,7 @@ ELSEIF(APPLE)
     target_link_libraries(${PROJECT_NAME}
       "-framework accelerate"
       )
-    target_link_libraries(${PROJECT_NAME} -static -force_load /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
+    target_link_libraries(${PROJECT_NAME} -static -lstdc++ -force_load /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
 ELSE()
     target_link_libraries(${PROJECT_NAME} 
         -static-libgcc -static-libstdc++ 
