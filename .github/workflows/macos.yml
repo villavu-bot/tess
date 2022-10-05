@@ -25,7 +25,7 @@ jobs:
            cd leptonica
            mkdir -p m4
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CPPFLAGS=-mmacosx-version-min=10.13 -stdlib=libc++'
+           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CPPFLAGS=-mmacosx-version-min=10.13' 'LDFLAGS=-stdlib=libc++'
            make
            sudo make install
 
@@ -36,7 +36,7 @@ jobs:
            cd tesseract
            mkdir -p m4
            ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -mmacosx-version-min=10.13 -std=c++11 -stdlib=libc++'
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -mmacosx-version-min=10.13' 'LDFLAGS=-stdlib=libc++'
            make
            sudo make install install
 
