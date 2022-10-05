@@ -9,37 +9,45 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
-           sudo apt-get update
-           sudo apt-get install -y g++-10 autoconf ninja-build
+        sudo apt-get update
+        sudo apt-get install -y g++-10 autoconf ninja-build
     
-    - name: Install lept
+    - name: Build Leptonica
       run: |
-           echo "Building leptonica..."
-           git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
-           cd leptonica
-           ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=g++-10' 'CFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++'
-           make
-           sudo make install
+        echo "Building leptonica..."
+        git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
+        cd leptonica
+        ./autogen.sh
+        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=g++-10' 'CFLAGS=-g0 -O3 -static -static-libgcc -static-libstdc++'
+        make
+        sudo make install
 
-    - name: Install Tesseract
+    - name: Build Tesseract
       run: |
-           echo "Building Tesseract..."
-           git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
-           cd tesseract
-           ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-10' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -static -static-libgcc -static-libstdc++'
-           make
-           sudo make install install
+        echo "Building Tesseract..."
+        git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
+        cd tesseract
+        ./autogen.sh
+        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-10' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -static -static-libgcc -static-libstdc++'
+        make
+        sudo make install install
 
-    - name: Build plugin
+    - name: Build Library
       run: |
-           mkdir -p build
-           cmake -S . -B build -G Ninja
-           cmake --build build --config Release
-           ldd build/${{ env.binary }}
+        mkdir -p build
+        cmake -S . -B build -G Ninja
+        cmake --build build --config Release
+        ldd build/${{ env.binary }}
+           
+    - name: Print Library Dependencies  
+      run: |
+        ldd build/${{ env.binary }}        
+           
+    - name: Print Library Exports  
+      run: |
+        nm -D build/${{ env.binary }}             
            
     - uses: actions/upload-artifact@v3
       with:
