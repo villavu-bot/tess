@@ -39,7 +39,6 @@ jobs:
         mkdir -p build
         cmake -S . -B build -G Ninja
         cmake --build build --config Release
-        ldd build/${{ env.binary }}
            
     - name: Print Library Dependencies  
       run: |
