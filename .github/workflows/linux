@@ -1,0 +1,46 @@
+name: linux
+on: push
+
+env:
+  binary: libtesseract64.so
+
+jobs:
+  macos:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+           sudo apt-get update
+           sudo apt-get install -y g++-10 autoconf ninja-build
+    
+    - name: Install lept
+      run: |
+           echo "Building leptonica..."
+           git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
+           cd leptonica
+           ./autogen.sh
+           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=g++-10' 'CPPFLAGS=-g0 -O3'
+           make
+           sudo make install
+
+    - name: Install Tesseract
+      run: |
+           echo "Building Tesseract..."
+           git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
+           cd tesseract
+           ./autogen.sh
+           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=g++-10' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3'
+           make
+           sudo make install install
+
+    - name: Build plugin
+      run: |
+           mkdir -p build
+           cmake -S . -B build -G Ninja
+           cmake --build build --config Release
+           
+    - uses: actions/upload-artifact@v3
+      with:
+          path: build/${{ env.binary }}
+          retention-days: 5
