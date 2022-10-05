@@ -38,6 +38,7 @@ jobs:
            mkdir -p build
            cmake -S . -B build
            cmake --build build --config Release
+           otool -L build/${{ env.binary }}
            
     - uses: actions/upload-artifact@v3
       with:
