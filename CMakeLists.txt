@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -v")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment version" FORCE)
 
 project(Tesseract DESCRIPTION "libtesseract")
