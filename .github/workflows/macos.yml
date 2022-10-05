@@ -9,37 +9,45 @@ jobs:
     runs-on: macos-12
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: |
-           brew install autoconf automake ninja libtool    
     
-    - name: Install lept
+    - name: Install Dependencies
       run: |
-           echo "Building leptonica..."
-           git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
-           cd leptonica
-           ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CPPFLAGS=-mmacosx-version-min=10.13 -g0 -O3'
-           make
-           sudo make install
+        brew install autoconf automake ninja libtool    
+    
+    - name: Install Leptonica
+      run: |
+        echo "Building leptonica..."
+        git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
+        cd leptonica
+        ./autogen.sh
+        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=clang++' 'CFLAGS=-g0 -O3 -mmacosx-version-min=10.13'
+        make
+        sudo make install
 
     - name: Install Tesseract
       run: |
-           echo "Building Tesseract..."
-           git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
-           cd tesseract
-           ./autogen.sh
-           ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CPPFLAGS=-DTESS_EXPORTS -mmacosx-version-min=10.13 -g0 -O3 -ffast-math'
-           make
-           sudo make install install
+        echo "Building Tesseract..."
+        git clone --depth 1 --branch 5.2.0 https://github.com/tesseract-ocr/tesseract.git
+        cd tesseract
+        ./autogen.sh
+        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=clang++' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3 -ffast-math -mmacosx-version-min=10.13'
+        make
+        sudo make install install
 
-    - name: Build plugin
+    - name: Build Library
       run: |
-           mkdir -p build
-           cmake -S . -B build -G Ninja
-           cmake --build build --config Release
-           otool -L build/${{ env.binary }}
+        mkdir -p build
+        cmake -S . -B build -G Ninja
+        cmake --build build --config Release
            
+    - name: Print Library Dependencies  
+      run: |
+        otool -L build/${{ env.binary }}        
+           
+    - name: Print Library Exports  
+      run: |
+        nm -g build/${{ env.binary }}   
+        
     - uses: actions/upload-artifact@v3
       with:
           path: build/${{ env.binary }}
