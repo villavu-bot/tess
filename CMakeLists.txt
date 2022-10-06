@@ -7,9 +7,7 @@ project(Tesseract DESCRIPTION "libtesseract")
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
-    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ ${CMAKE_CXX_STANDARD_LIBRARIES}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
-
+    target_link_libraries(${PROJECT_NAME} -static gcc stdc++ winpthread)
     target_link_libraries(${PROJECT_NAME}
         -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
     )
