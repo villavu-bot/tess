@@ -7,9 +7,9 @@ project(Tesseract DESCRIPTION "libtesseract")
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
-    target_link_libraries(${PROJECT_NAME} -static gcc stdc++ winpthread)
+    target_link_libraries(${PROJECT_NAME} -static-libstdc++ -static-libgcc winpthread)
     target_link_libraries(${PROJECT_NAME}
-        -Wl,--whole-archive -Wl,--export-all-symbol libtesseract.a libleptonica.a -Wl,--no-whole-archive
+        libtesseract.a libleptonica.a
     )
 ELSEIF(APPLE)
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
