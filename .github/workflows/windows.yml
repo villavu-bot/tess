@@ -63,10 +63,25 @@ jobs:
         make install install
 
     - name: Test
+      if: matrix.msystem == 'MINGW64'
       run: |
-        find / -name libtesseract.a
-        find / -name leptonica.a
+        mkdir test
+        cp /mingw64/lib/libtesseract.a test 
+        cp /mingw64/lib/libleptonica.a test
+        
+    - name: Test
+      if: matrix.msystem == 'MINGW32'
+      run: |
+        mkdir test
+        cp /mingw32/lib/libtesseract.a test 
+        cp /mingw32/lib/libleptonica.a test        
     
+    - uses: actions/upload-artifact@v3
+      with:
+          name: libz
+          path: test
+          retention-days: 5  
+          
     - name: Build Library
       run: |        
         mkdir -p build
