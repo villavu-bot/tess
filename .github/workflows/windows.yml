@@ -79,5 +79,12 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
+          name: libtesseract64_a
           path: /mingw64/lib/libtesseract.a
           retention-days: 5
+          
+    - uses: actions/upload-artifact@v3
+      with:
+          name: libtesseract32_a
+          path: /mingw32/lib/libtesseract.a
+          retention-days: 5          
