@@ -8,11 +8,10 @@ add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
     #target_link_options(${PROJECT_NAME} PRIVATE -static)
-    target_link_libraries(${PROJECT_NAME} -static -static-libgcc -static-libstdc++ -Wl,--whole-archive -Wl,--export-all-symbols libtesseract.a libleptonica.a -Wl,--no-whole-archive ws2_32 pthread)
-    #target_link_libraries(${PROJECT_NAME} -pthread)
-    #target_link_libraries(${PROJECT_NAME}
-    #    -static libtesseract.a libleptonica.a
-    #)
+    target_link_libraries(${PROJECT_NAME} gcc_s_seh-1 stdc++-6 winpthread-1)
+    target_link_libraries(${PROJECT_NAME}
+        libtesseract.a libleptonica.a
+    )
 ELSEIF(APPLE)
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
     target_link_libraries(${PROJECT_NAME}
