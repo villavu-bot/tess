@@ -7,8 +7,7 @@ project(Tesseract DESCRIPTION "libtesseract")
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
-    #target_link_options(${PROJECT_NAME} PRIVATE -static)
-    target_link_libraries(${PROJECT_NAME} -static gcc stdc++ winpthread -dynamic)
+    target_link_options(${PROJECT_NAME} PUBLIC -static-libgcc -static-libstdc++)
     target_link_libraries(${PROJECT_NAME}
         libtesseract.a libleptonica.a
     )
