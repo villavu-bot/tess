@@ -47,7 +47,7 @@ jobs:
         git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
         cd leptonica
         ./autogen.sh
-        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=${{ matrix.config.cxx }}' 'CFLAGS=-g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -lwinpthread'
+        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=${{ matrix.config.cxx }}' 'CFLAGS=-g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive'
         make
         make install
 
@@ -58,7 +58,7 @@ jobs:
         cd tesseract
         sed -e "s/tesseract_LDADD += -ltiff//g" -i makefile.am
         ./autogen.sh
-        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -lwinpthread'
+        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive'
         make
         make install install
 
