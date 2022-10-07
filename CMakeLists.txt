@@ -6,8 +6,8 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment ve
 project(Tesseract DESCRIPTION "libtesseract")
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
-IF(WIN32)
-    target_link_libraries(${PROJECT_NAME} -static-libstdc++ -static-libgcc -Wl,--whole-archive -lwinpthread -Wl,--no-whole-archive)
+IF(WIN32))
+    target_link_options(${PROJECT_NAME} -static -static-libgcc -static-libstdc++)
     target_link_libraries(${PROJECT_NAME}
         libtesseract.a libleptonica.a
     )
