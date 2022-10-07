@@ -8,9 +8,8 @@ add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
     target_link_options(${PROJECT_NAME} PUBLIC -static-libgcc -static-libstdc++)
-    target_link_options(${PROJECT_NAME} PUBLIC -Wl,--whole-archive -lwinpthread -Wl,--no-whole-archive)
     target_link_libraries(${PROJECT_NAME}
-        libtesseract.a libleptonica.a pthread
+        libtesseract.a libleptonica.a libwinpthread.a
     )
 ELSEIF(APPLE)
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
