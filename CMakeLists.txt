@@ -8,7 +8,7 @@ add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
     #target_link_options(${PROJECT_NAME} PRIVATE -static)
-    target_link_libraries(${PROJECT_NAME} gcc_s_seh-1 stdc++-6 winpthread-1)
+    target_link_libraries(${PROJECT_NAME} -static gcc stdc++ winpthread -dynamic)
     target_link_libraries(${PROJECT_NAME}
         libtesseract.a libleptonica.a
     )
