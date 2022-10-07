@@ -1,5 +1,5 @@
 name: macos
-on: push
+on: fork
 
 env:
   binary: libtesseract64.dylib
