@@ -18,7 +18,7 @@ ELSEIF(APPLE)
     target_link_libraries(${PROJECT_NAME}
       "-framework accelerate"
       )
-    target_link_libraries(${PROJECT_NAME} -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a)
+    target_link_libraries(${PROJECT_NAME} libtesseract.a libleptonica.a)
 ELSE()
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
     target_link_libraries(${PROJECT_NAME}
