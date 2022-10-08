@@ -9,7 +9,7 @@ add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 IF(WIN32)
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
     target_link_libraries(${PROJECT_NAME}
-        -Wl,--whole-archive libtesseract.a libleptonica.a -Wl,--no-whole-archive
+        -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
 ELSEIF(APPLE)
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
