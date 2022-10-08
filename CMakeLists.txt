@@ -18,9 +18,9 @@ ELSEIF(APPLE)
       )
     target_link_libraries(${PROJECT_NAME} /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
 ELSE()
-    target_link_libraries(${PROJECT_NAME} 
-        -static-libgcc -static-libstdc++ 
-        -Wl,--whole-archive libtesseract.a libleptonica.a -Wl,--no-whole-archive
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    target_link_libraries(${PROJECT_NAME}
+        -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
 ENDIF()
 
