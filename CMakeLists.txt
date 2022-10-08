@@ -7,18 +7,20 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum OS X deployment ve
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
 
 IF(WIN32)
-    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
     target_link_libraries(${PROJECT_NAME}
         -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
 ELSEIF(APPLE)
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    
     target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include/)
     target_link_libraries(${PROJECT_NAME}
       "-framework accelerate"
       )
     target_link_libraries(${PROJECT_NAME} /usr/local/lib/libtesseract.a /usr/local/lib/libleptonica.a)
 ELSE()
-    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
     target_link_libraries(${PROJECT_NAME}
         -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
