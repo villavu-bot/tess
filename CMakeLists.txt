@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.2)
 project(Tesseract DESCRIPTION "libtesseract")
 
 set(CMAKE_CXX_STANDARD 17)
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
 IF(WIN32)
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
