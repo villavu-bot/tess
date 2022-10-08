@@ -47,7 +47,7 @@ jobs:
         git clone --depth 1 https://github.com/DanBloomberg/leptonica.git
         cd leptonica
         ./autogen.sh
-        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=${{ matrix.config.cxx }}' 'CFLAGS=-g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive'
+        ./configure '--with-pic' '--disable-shared' '--without-libpng' '--without-zlib' '--without-jpeg' '--without-libtiff' '--without-giflib' '--without-libwebp' '--without-libwebpmux' '--without-libopenjpeg' '--disable-programs' 'CXX=${{ matrix.config.cxx }}' 'CFLAGS=-g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++'
         make
         make install
 
@@ -58,30 +58,14 @@ jobs:
         cd tesseract
         sed -e "s/tesseract_LDADD += -ltiff//g" -i makefile.am
         ./autogen.sh
-        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive'
+        ./configure '--with-pic' '--disable-shared' '--disable-legacy' '--disable-graphics' '--disable-openmp' '--without-curl' '--without-archive' '--disable-doc' 'CXX=${{ matrix.config.cxx }}' 'CXXFLAGS=-DTESS_EXPORTS -g0 -O3' 'LDFLAGS=-static-libgcc -static-libstdc++'
         make
         make install install
 
     - name: Test
-      if: matrix.msystem == 'MINGW64'
       run: |
-        mkdir test
-        cp /mingw64/lib/libtesseract.a test 
-        cp /mingw64/lib/libleptonica.a test
-        
-    - name: Test
-      if: matrix.msystem == 'MINGW32'
-      run: |
-        mkdir test
-        cp /mingw32/lib/libtesseract.a test 
-        cp /mingw32/lib/libleptonica.a test        
-    
-    - uses: actions/upload-artifact@v3
-      with:
-          name: libz
-          path: test
-          retention-days: 5  
-          
+        find / -name libwinpthread.a 
+     
     - name: Build Library
       run: |        
         mkdir -p build
