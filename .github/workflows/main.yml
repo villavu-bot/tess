@@ -6,6 +6,5 @@ jobs:
     runs-on: windows-2019
     steps:
     - name: Test
-      shell: default
       run: |
         dumpbin
