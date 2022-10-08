@@ -68,9 +68,15 @@ jobs:
         cmake -S . -B build -G Ninja
         cmake --build build --config Release
            
-    - name: Print Library Dependencies  
+    - name: Print Dependencies  
       run: |
-        ldd build/${{ matrix.binary }}        
+        ldd build/${{ matrix.binary }}  
+    
+    - uses: ilammy/msvc-dev-cmd@v1.11.0
+    - name: Print Exports 
+      shell: cmd
+      run: |
+        dumpbin /EXPORTS build/${{ matrix.binary }}       
            
     - uses: actions/upload-artifact@v3
       with:
