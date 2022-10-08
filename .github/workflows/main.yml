@@ -5,6 +5,11 @@ jobs:
   test:
     runs-on: windows-2019
     steps:
-    - name: Test
-      run: |
-        dumpbin
+      - name: Test
+        run: |
+          find / -name dumpbin.exe
+          
+      - uses: ilammy/msvc-dev-cmd@v1.11.0
+      - name: Test
+        run: |
+          dumpbin
