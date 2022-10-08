@@ -4,10 +4,10 @@ project(Tesseract DESCRIPTION "libtesseract")
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(${PROJECT_NAME} SHARED main.cpp exports.cpp)
-set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE -s)
 
 IF(WIN32)
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    
     target_link_libraries(${PROJECT_NAME}
         -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
@@ -22,8 +22,9 @@ ELSEIF(APPLE)
     target_link_libraries(${PROJECT_NAME} libtesseract.a libleptonica.a)
 ELSE()
     set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    
     target_link_libraries(${PROJECT_NAME}
-        -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
+      -Wl,--whole-archive libtesseract.a -Wl,--no-whole-archive libleptonica.a
     )
 ENDIF()
 
