@@ -80,6 +80,6 @@ jobs:
            
     - uses: actions/upload-artifact@v3
       with:
-          name: ${{ env.binary }}
+          name: ${{ matrix.binary }}
           path: build/${{ matrix.binary }}
           retention-days: 5    
